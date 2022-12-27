@@ -161,7 +161,7 @@ public class Model extends Observable {
                             if(nextTile==null){
                                 break;
                             }
-                            board.move(col,nextLine,nextTile);
+                            board.move(col,n+1,nextTile);
                         }
 
                         }

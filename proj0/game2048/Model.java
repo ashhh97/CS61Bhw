@@ -113,6 +113,72 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        //only move top
+        board.setViewingPerspective(side);
+
+//if there is space, move t to the space(null)
+        for (int col =board.size()-1; col >=0; col-=1) {
+            for(int row = board.size()-1; row >=0; row-=1){
+                Tile t = board.tile(col,row);
+//                Tile top = board.tile(col,topRow);
+//                System.out.println(t);
+//                System.out.println(top+"I am top row");
+                if(t!=null){
+                    int topRow = 3;
+                    while(topRow>=row){
+                        if(board.tile(col,topRow)==null){
+                            break;
+                        }
+                        topRow--;
+                    }
+                    if(topRow>=row){
+                        board.move(col,topRow,t);
+                        changed=true;
+                    }
+                }
+            }
+
+            //merge it from all the sides
+            for(int row = board.size()-1; row >=0; row-=1){
+                Tile currentTile = board.tile(col,row);
+//                System.out.println(currentTile+"I am current tile");
+                int nextLine = row-1;
+                int nextCol = col;
+                if(nextLine>=0 && nextCol>=0){
+                    Tile newTile = board.tile(nextCol,nextLine);
+//                    System.out.println(newTile+"I am new tile");
+                    if(currentTile==null||newTile==null){
+                            break;
+                        }
+                    if(newTile.value()==currentTile.value()){
+                          board.move(col,row,newTile);
+                          changed=true;
+                          score +=newTile.value()*2;
+
+                          int n = nextLine-1;
+                        for (int i = n; i >=0 ; i--) {
+                            Tile nextTile = board.tile(col,n);
+                            if(nextTile==null){
+                                break;
+                            }
+                            board.move(col,nextLine,nextTile);
+                        }
+
+                        }
+                    }
+                }
+
+            }
+
+        board.setViewingPerspective(Side.NORTH);
+
+
+
+
+
+
+
+
 
         checkGameOver();
         if (changed) {
@@ -138,6 +204,15 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+//        System.out.println(b.tile(0,0));
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if(b.tile(i,j)==null){
+                    return true;
+                }
+            }
+
+        }
         return false;
     }
 
@@ -148,6 +223,15 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if (b.tile(i, j) == null) continue;
+                if(b.tile(i,j).value()==MAX_PIECE){
+                    return true;
+                }
+            }
+
+        }
         return false;
     }
 
@@ -159,6 +243,21 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if(emptySpaceExists(b))return true;
+                //left and right
+                boolean leftAndRight = i+1<b.size()&&b.tile(i,j).value()==b.tile(i+1,j).value();
+                boolean upAndDown = j+1<b.size()&&b.tile(i,j).value()==b.tile(i,j+1).value();
+
+                //top and down
+               if (leftAndRight||upAndDown){
+                    return true;
+                  }
+            }
+
+        }
+
         return false;
     }
 

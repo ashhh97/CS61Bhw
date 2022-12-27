@@ -49,6 +49,7 @@ public class Board implements Iterable<Tile> {
     /** Returns the size of the board. */
     public int size() {
         return values.length;
+
     }
 
     /** Shifts the view of the Board. */

@@ -156,13 +156,24 @@ public class Model extends Observable {
                           score +=newTile.value()*2;
 
                           int n = nextLine-1;
-                        for (int i = n; i >=0 ; i--) {
+                          for (int i = n; i >=0 ; i--) {
                             Tile nextTile = board.tile(col,n);
-                            if(nextTile==null){
+                            if(nextTile==null ){
                                 break;
                             }
+
                             board.move(col,n+1,nextTile);
                         }
+                        int last = n-1;
+                        for (int j = last; j >=0 ; j--) {
+                            Tile lastTile = board.tile(col, last);
+                            if (lastTile == null) {
+                                break;
+                            }
+
+                            board.move(col, last + 1, lastTile);
+
+                         }
 
                         }
                     }

@@ -56,6 +56,16 @@ public class LinkedListDequeTest {
 		assertTrue("lld1 should be empty after removal", lld1.isEmpty());
 
     }
+    @Test
+    public void getIndexTest(){
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        lld1.addFirst(0);
+        int first = lld1.get(0);
+
+        assertEquals(first,0);
+
+
+    }
 
     @Test
     /* Tests removing from an empty deque */

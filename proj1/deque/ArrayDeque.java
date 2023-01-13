@@ -26,10 +26,16 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     public void resize(int capacity){
         T[] re = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, re, 2,size);
+        if(nextFirst > nextLast){
+            int start = items.length - (nextFirst+1);
+            System.arraycopy(items, nextFirst + 1, re, 1 ,start);
+            System.arraycopy(items, 0, re, start+1, nextLast);
+        } else {
+            System.arraycopy(items, nextFirst, re, 1 ,size);
+        }
         items = re;
-        nextFirst = 1;
-        nextLast = Math.floorMod((nextFirst + size), items.length);
+        nextFirst = 0;
+        nextLast = size +1;
     }
 
 
@@ -37,33 +43,29 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public void addFirst(T item) {
         int theLastOne = items.length - 1;
         int resizeInt = items.length * 2;
-
-        if(isFull() == false) {
-            size = size+1;
-            items[nextFirst] = item;
-            nextFirst--;
-            if(nextFirst < 0 && items[theLastOne]==null) {
-                nextFirst = theLastOne;
-            }
-        }else {
-            resize(resizeInt);//items.length*2
+        if (size == items.length - 2){
+            resize(resizeInt);
+        }
+        size = size + 1;
+        items[nextFirst] = item;
+        nextFirst = nextFirst - 1;
+        if(nextFirst < 0 && items[theLastOne] == null) {
+            nextFirst = theLastOne;
         }
     }
 
     @Override
     public void addLast(T item) {
         int resizeInt = items.length*2;
-        while(isFull() == false) {
-            size++;
-            items[nextLast] = item;
-            nextLast++;
-            if (nextLast >= items.length && items[theFirstOne] == null) {
-                nextLast = theFirstOne;
-            }
+        if (size == items.length - 2){
+            resize(resizeInt);
         }
-         while(isFull() == true) {
-             resize(resizeInt);
-         }
+        size = size + 1;
+        items[nextLast] = item;
+        nextLast = nextLast + 1;
+        if (nextLast >= items.length && items[theFirstOne] == null) {
+            nextLast = theFirstOne;
+        }
     }
 
 //    @Override
@@ -111,6 +113,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
+        if(size == 1){
+            return items[index+1];
+        }
         if(isEmpty()) {
             return null;
         }

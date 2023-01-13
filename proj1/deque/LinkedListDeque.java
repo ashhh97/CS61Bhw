@@ -88,7 +88,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeFirst() {
-        size = size - 1;
+        if (size > 0) {
+            size = size - 1;
+        }
         if(sentinel.next == sentinel) {
             return null;
 //            sentinel.next = sentinel.next.next;
@@ -107,10 +109,12 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeLast() {
+        if (size > 0) {
+            size = size - 1;
+        }
         if (sentinel.next == sentinel) {
             return null;
         }
-        size = size - 1;
         return removeLastHelper();
 
     }

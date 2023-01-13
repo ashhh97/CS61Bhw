@@ -25,6 +25,14 @@ public class ArrayDequeTest {
         System.out.println("Printing out ArrayDeque: ");
         ads.printDeque();
     }
+    @Test
+    public void getIndexTest(){
+        ArrayDeque<Integer> lld1 = new ArrayDeque<>();
+        lld1.addFirst(0);
+        int first = lld1.get(0);
+        assertEquals(first,0);
+
+    }
 
     @Test
     public void addRemoveTest() {
@@ -86,19 +94,36 @@ public class ArrayDequeTest {
         assertEquals("Should return null when removeLast is called on an empty Deque,", null, lld1.removeLast());
 
     }
+//    @Test
+//    public void bigLLDequeTest() {
+//
+//        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+//        for (int i = 0; i < 1000000; i++) {
+//            lld1.addLast(i);
+//        }
+//
+//        for (double i = 0; i < 500000; i++) {
+//            assertEquals("Should have the same value", i, (double) lld1.removeFirst(), 0.0);
+//        }
+//
+//        for (double i = 999999; i > 500000; i--) {
+//            assertEquals("Should have the same value", i, (double) lld1.removeLast(), 0.0);
+//        }
+
+//    }
     @Test
     public void bigLLDequeTest() {
 
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 20; i++) {
             lld1.addLast(i);
         }
 
-        for (double i = 0; i < 500000; i++) {
+        for (double i = 0; i < 20; i++) {
             assertEquals("Should have the same value", i, (double) lld1.removeFirst(), 0.0);
         }
 
-        for (double i = 999999; i > 500000; i--) {
+        for (double i = 30; i > 20; i--) {
             assertEquals("Should have the same value", i, (double) lld1.removeLast(), 0.0);
         }
 

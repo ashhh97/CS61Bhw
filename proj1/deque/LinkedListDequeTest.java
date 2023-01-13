@@ -63,8 +63,6 @@ public class LinkedListDequeTest {
         int first = lld1.get(0);
 
         assertEquals(first,0);
-
-
     }
 
     @Test

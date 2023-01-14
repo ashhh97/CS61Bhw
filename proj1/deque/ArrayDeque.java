@@ -1,5 +1,11 @@
+
 package deque;
+import deque.Deque;
+
+import java.util.Arrays;
 import java.util.Iterator;
+
+import static java.util.Arrays.*;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
@@ -26,24 +32,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     public void resize(int capacity){
         T[] re = (T[]) new Object[capacity];
-        if(nextFirst > nextLast){
-            int start = items.length - (nextFirst+1);
-            System.arraycopy(items, nextFirst + 1, re, 1 ,start);
-            System.arraycopy(items, 0, re, start+1, nextLast);
-        } else {
-            System.arraycopy(items, nextFirst, re, 1 ,size);
-        }
+//        if(nextFirst > nextLast){
+            System.arraycopy(items, nextLast, re, 0 ,size - nextLast);
+            System.arraycopy(items,0, re, size - nextLast, size-(size - nextLast));
+//        } else {
+//            System.arraycopy(items, nextFirst, re, 0 ,size - nextLast);
+//            System.arraycopy(items,0, re, size - nextLast, size-(size - nextLast));
+//        }
         items = re;
-        nextFirst = 0;
-        nextLast = size +1;
+        nextFirst = items.length - 1;
+        nextLast = size;
     }
-
 
     @Override
     public void addFirst(T item) {
         int theLastOne = items.length - 1;
         int resizeInt = items.length * 2;
-        if (size == items.length - 2){
+
+        if (isFull()){
             resize(resizeInt);
         }
         size = size + 1;
@@ -57,7 +63,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addLast(T item) {
         int resizeInt = items.length*2;
-        if (size == items.length - 2){
+        if (isFull()){
             resize(resizeInt);
         }
         size = size + 1;
@@ -85,6 +91,22 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         System.out.println(" ");
     }
+    private int getCurrentFirst(){
+        int currentFirst = nextFirst + 1;
+        if(currentFirst > items.length - 1){
+            currentFirst = 0;
+        }
+        return currentFirst;
+    }
+    private int getCurrentLast(){
+        int currentLast = nextLast - 1;
+        if(currentLast < 0){
+            currentLast = items.length - 1;
+        }
+        return currentLast;
+    }
+
+
 
     @Override
     public T removeFirst() {
@@ -92,9 +114,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         size = size - 1;
-        T removed = items[nextFirst+1];
-        items[nextFirst] = null;
-        nextFirst = nextFirst + 1;
+
+        int currentFirst = getCurrentFirst();
+
+        T removed = items[currentFirst];
+        items[currentFirst] = null;
+
+        nextFirst = currentFirst;
+
         return removed;
     }
 
@@ -104,11 +131,15 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         size = size - 1;
-        T removed = items[nextLast];
-        items[nextLast] = null;
-        nextLast = nextLast - 1;
-        return removed;
 
+        int currentLast = getCurrentLast();
+
+        T removed = items[currentLast];
+        items[currentLast] = null;
+
+        nextLast = currentLast;
+
+        return removed;
     }
 
     @Override
@@ -167,3 +198,4 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 }
+

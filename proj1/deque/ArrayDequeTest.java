@@ -49,18 +49,26 @@ public class ArrayDequeTest {
         }
         int test1 = lld1.get(0);
         assertEquals(0, test1);
-//        lld1.addFirst(0);
-//        int test1 = lld1.get(0);
-//        assertEquals(0,test1);
-//
-//        lld1.addFirst(1);
-//        int test2 = lld1.get(1);
-//
-//        assertEquals(1,test2);
-//
-//        lld1.addLast(0);
-//        int test3 = lld1.get(0);
-//        assertEquals(0,test3);
+
+        lld1.addLast(0);
+        lld1.addFirst(1);
+        lld1.addLast(2);
+        lld1.get(0);
+        lld1.addFirst(4);
+        lld1.addLast(5);
+        lld1.removeFirst();
+        lld1.addFirst(7);
+        lld1.addFirst(8);
+        lld1.get(0);
+        lld1.addLast(10);
+        lld1.removeLast();
+        lld1.removeFirst();
+        lld1.addLast(13);
+        lld1.addLast(14);
+        lld1.addLast(15);
+        lld1.removeFirst();
+        lld1.addLast(17);
+
     }
 
     @Test

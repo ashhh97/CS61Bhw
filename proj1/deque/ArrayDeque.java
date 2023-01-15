@@ -20,20 +20,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
 
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = (T[]) new Object[startingSize];
         size = 0;
-
     }
 
     private boolean isFull() {
         return size == items.length;
     }
-    private void resize(int capacity){
+    private void resize(int capacity) {
         T[] re = (T[]) new Object[capacity];
 //        if(nextFirst > nextLast){
-        System.arraycopy(items, nextLast, re, 0 ,size - nextLast);
-        System.arraycopy(items,0, re, size - nextLast, size-(size - nextLast));
+        System.arraycopy(items, nextLast, re, 0,size - nextLast);
+        System.arraycopy(items, 0, re, size - nextLast, size - (size - nextLast));
 //        } else {
 //            System.arraycopy(items, nextFirst, re, 0 ,size - nextLast);
 //            System.arraycopy(items,0, re, size - nextLast, size-(size - nextLast));
@@ -48,21 +47,21 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         int theLastOne = items.length - 1;
         int resizeInt = items.length * 2;
 
-        if (isFull()){
+        if (isFull()) {
             resize(resizeInt);
         }
         size = size + 1;
         items[nextFirst] = item;
         nextFirst = nextFirst - 1;
-        if(nextFirst < 0 && items[theLastOne] == null) {
+        if (nextFirst < 0 && items[theLastOne] == null) {
             nextFirst = theLastOne;
         }
     }
 
     @Override
     public void addLast(T item) {
-        int resizeInt = items.length*2;
-        if (isFull()){
+        int resizeInt = items.length * 2;
+        if (isFull()) {
             resize(resizeInt);
         }
         size = size + 1;
@@ -86,20 +85,20 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void printDeque() {
         for (int i = 0; i < items.length; i++) {
-            System.out.print(items[i]+ " ");
+            System.out.print(items[i] + " ");
         }
         System.out.println(" ");
     }
-    private int getCurrentFirst(){
+    private int getCurrentFirst() {
         int currentFirst = nextFirst + 1;
-        if(currentFirst > items.length - 1){
+        if (currentFirst > items.length - 1) {
             currentFirst = 0;
         }
         return currentFirst;
     }
-    private int getCurrentLast(){
+    private int getCurrentLast() {
         int currentLast = nextLast - 1;
-        if(currentLast < 0){
+        if (currentLast < 0) {
             currentLast = items.length - 1;
         }
         return currentLast;
@@ -109,7 +108,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeFirst() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         size = size - 1;
@@ -126,7 +125,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         size = size - 1;
@@ -153,7 +152,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return new ArrayDequeIterator();
     }
 
-    private class ArrayDequeIterator implements Iterator<T>{
+    private class ArrayDequeIterator implements Iterator<T> {
         private int wizPos;
         public ArrayDequeIterator() {
             wizPos = 0;
@@ -162,30 +161,27 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return wizPos < size;
         }
 
-        public T next(){
+        public T next() {
             T returnItem = get(wizPos);
             wizPos += 1;
             return returnItem;
         }
     }
 
-    public boolean equals(Object o){
-        if (o == null){
+    public boolean equals(Object o) {
+        if (o == null) {
             return false;
         }
-        if (!(o instanceof Deque)){
+        if (!(o instanceof Deque)) {
             return false;
         }
         Deque<T> helper = (Deque<T>) o;
-        if(helper.size() != this.size()){
+        if(helper.size() != this.size()) {
             return false;
         }
 
-        Iterator<T> objHelper = (Iterator<T>) o;
-        Iterator<T> thisHelper = this.iterator();
-
-        while (objHelper.hasNext()){
-            if (objHelper.next() != thisHelper.next()){
+        for (int i = 0; i < size; i++) {
+            if (!(helper.get(i).equals(this.get(i)))) {
                 return false;
             }
         }

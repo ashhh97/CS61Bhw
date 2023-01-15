@@ -120,10 +120,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         Node helper = sentinel;
         if (index < 0 && index > this.size()) {
             return null;
-        }else {
-            while (index >= 0){
+        } else {
+            while (index >= 0) {
                 helper = helper.next;
-                index = index-1;
+                index = index - 1;
             }
             return helper.item;
         }
@@ -134,12 +134,12 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 //        Node helper = sentinel;
         if (index < 0 && index > this.size()) {
             return null;
-        } else if (index == 0){
+        } else if (index == 0) {
             return T.item;
         } else {
             T = T.next;
-            index = index-1;
-            getRecursive(index,T);
+            index = index - 1;
+            getRecursive(index, T);
         }
         return T.item;
     }
@@ -152,7 +152,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
     private class LListIterator implements Iterator<T> {
         private int wizPos;
-        public LListIterator() {
+        LListIterator() {
             wizPos = 0;
         }
         public boolean hasNext() {
@@ -174,18 +174,16 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             return false;
         }
         Deque<T> helper = (Deque<T>) o;
-        if (helper.size() != this.size()) {
+        if(helper.size() != this.size()) {
             return false;
         }
 
-        Iterator<T> objHelper = (Iterator<T>) o;
-        Iterator<T> thisHelper = this.iterator();
-
-        while (objHelper.hasNext()) {
-            if (objHelper.next() != thisHelper.next()) {
+        for (int i = 0; i < size; i++) {
+            if (!(helper.get(i).equals(this.get(i)))) {
                 return false;
             }
         }
+
         return true;
     }
 }

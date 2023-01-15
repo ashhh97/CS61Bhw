@@ -1,6 +1,10 @@
 package deque;
+import deque.Deque;
+
 import java.util.Arrays;
 import java.util.Iterator;
+
+import static java.util.Arrays.*;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
@@ -16,7 +20,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
 
 
-    public ArrayDeque() {
+    public ArrayDeque(){
         items = (T[]) new Object[startingSize];
         size = 0;
 
@@ -25,40 +29,32 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private boolean isFull() {
         return size == items.length;
     }
-    private float getUseRate() {
-        float rate;
-        rate = size / items.length;
-        return rate;
-    }
-
-
-    private void resize(int capacity) {
+    private void resize(int capacity){
         T[] re = (T[]) new Object[capacity];
-        System.arraycopy(items, nextLast, re, 0, size - nextLast);
-        System.arraycopy(items, 0, re, size - nextLast, size - (size - nextLast));
-
+//        if(nextFirst > nextLast){
+        System.arraycopy(items, nextLast, re, 0 ,size - nextLast);
+        System.arraycopy(items,0, re, size - nextLast, size-(size - nextLast));
+//        } else {
+//            System.arraycopy(items, nextFirst, re, 0 ,size - nextLast);
+//            System.arraycopy(items,0, re, size - nextLast, size-(size - nextLast));
+//        }
         items = re;
         nextFirst = items.length - 1;
         nextLast = size;
-
-        if (getUseRate() < 0.25 && items.length >= startingSize * 2) {
-            resize(items.length / 2);
-        }
     }
-
 
     @Override
     public void addFirst(T item) {
         int theLastOne = items.length - 1;
         int resizeInt = items.length * 2;
 
-        if (isFull()) {
+        if (isFull()){
             resize(resizeInt);
         }
         size = size + 1;
         items[nextFirst] = item;
         nextFirst = nextFirst - 1;
-        if (nextFirst < 0 && items[theLastOne] == null) {
+        if(nextFirst < 0 && items[theLastOne] == null) {
             nextFirst = theLastOne;
         }
     }
@@ -66,7 +62,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addLast(T item) {
         int resizeInt = items.length*2;
-        if (isFull()) {
+        if (isFull()){
             resize(resizeInt);
         }
         size = size + 1;
@@ -90,20 +86,20 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void printDeque() {
         for (int i = 0; i < items.length; i++) {
-            System.out.print(items[i] + " ");
+            System.out.print(items[i]+ " ");
         }
         System.out.println(" ");
     }
-    private int getCurrentFirst() {
+    private int getCurrentFirst(){
         int currentFirst = nextFirst + 1;
-        if (currentFirst > items.length - 1) {
+        if(currentFirst > items.length - 1){
             currentFirst = 0;
         }
         return currentFirst;
     }
-    private int getCurrentLast() {
+    private int getCurrentLast(){
         int currentLast = nextLast - 1;
-        if (currentLast < 0) {
+        if(currentLast < 0){
             currentLast = items.length - 1;
         }
         return currentLast;
@@ -113,7 +109,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeFirst() {
-        if (isEmpty()) {
+        if(isEmpty()) {
             return null;
         }
         size = size - 1;
@@ -130,7 +126,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeLast() {
-        if (isEmpty()) {
+        if(isEmpty()) {
             return null;
         }
         size = size - 1;
@@ -147,22 +143,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
-        int currentFirst = getCurrentFirst();
-//        int currentLast =  getCurrentLast();
-//        int actualIndex = 0;
-
-        //addFirst
-//        if (nextFirst == currentLast) {
-//            actualIndex = Math.floorMod((currentLast - index), items.length);
-//            return items[actualIndex];
-//        }
-        //addLast
-//        if (nextLast == currentFirst) {
-            int actualIndex = Math.floorMod((currentFirst + index), items.length);
-            return items[actualIndex];
-//        }
-
-//        return items[index];
+        if(size == 1){
+            return items[index+1];
+        }
+        if(isEmpty()) {
+            return null;
+        }
+        return items[index];
     }
 
     @Override
@@ -170,7 +157,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return new ArrayDequeIterator();
     }
 
-    private class ArrayDequeIterator implements Iterator<T> {
+    private class ArrayDequeIterator implements Iterator<T>{
         private int wizPos;
         public ArrayDequeIterator() {
             wizPos = 0;
@@ -179,30 +166,30 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return wizPos < size;
         }
 
-        public T next() {
+        public T next(){
             T returnItem = get(wizPos);
             wizPos += 1;
             return returnItem;
         }
     }
 
-    public boolean equals(Object o) {
-        if (o == null) {
+    public boolean equals(Object o){
+        if (o == null){
             return false;
         }
-        if (!(o instanceof Deque)) {
+        if (!(o instanceof Deque)){
             return false;
         }
         Deque<T> helper = (Deque<T>) o;
-        if (helper.size() != this.size()) {
+        if(helper.size() != this.size()){
             return false;
         }
 
         Iterator<T> objHelper = (Iterator<T>) o;
         Iterator<T> thisHelper = this.iterator();
 
-        while (objHelper.hasNext()) {
-            if (objHelper.next() != thisHelper.next()) {
+        while (objHelper.hasNext()){
+            if (objHelper.next() != thisHelper.next()){
                 return false;
             }
         }
@@ -210,4 +197,3 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 }
-

@@ -28,10 +28,20 @@ public class ArrayDequeTest {
     }
     @Test
     public void getIndexTest(){
-        ArrayDeque<Integer> lld1 = new ArrayDeque<>();
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
         lld1.addFirst(0);
-        int first = lld1.get(0);
-        assertEquals(first,0);
+        int test1 = lld1.get(0);
+        assertEquals(0,test1);
+
+        lld1.addFirst(1);
+        int test2 = lld1.get(1);
+
+        assertEquals(1,test2);
+
+        lld1.addLast(0);
+        int test3 = lld1.get(0);
+        assertEquals(0,test3);
+
 
     }
 

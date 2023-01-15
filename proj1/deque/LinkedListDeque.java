@@ -74,7 +74,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         System.out.println(" ");
     }
 
-    public T removeFirstHelper() {
+    private T removeFirstHelper() {
         Node first = sentinel.next;
         Node newFirst = first.next;
         sentinel.next = newFirst;
@@ -130,7 +130,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     //Same as get, but uses recursion.
-    public T getRecursive(int index, Node T) {
+    private T getRecursive(int index, Node T) {
 //        Node helper = sentinel;
         if (index < 0 && index > this.size()) {
             return null;

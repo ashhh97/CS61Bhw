@@ -26,20 +26,22 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size == items.length;
     }
     private float getUseRate() {
-        float rate = size / items.length;
+        float rate;
+        rate = size / items.length;
         return rate;
     }
 
+
     private void resize(int capacity) {
         T[] re = (T[]) new Object[capacity];
-        System.arraycopy(items, nextLast, re, 0 ,size - nextLast);
-        System.arraycopy(items,0, re, size - nextLast, size - (size - nextLast));
+        System.arraycopy(items, nextLast, re, 0, size - nextLast);
+        System.arraycopy(items, 0, re, size - nextLast, size - (size - nextLast));
 
         items = re;
         nextFirst = items.length - 1;
         nextLast = size;
 
-        if (getUseRate() < 0.25 && items.length >= startingSize*2 ){
+        if (getUseRate() < 0.25 && items.length >= startingSize * 2) {
             resize(items.length / 2);
         }
     }
@@ -145,23 +147,22 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
-        int initialCurrentFirst = 2;
         int currentFirst = getCurrentFirst();
-        int currentLast =  getCurrentLast();
-        int actualIndex = 0;
+//        int currentLast =  getCurrentLast();
+//        int actualIndex = 0;
 
         //addFirst
-        if (nextLast == nextLast) {
-            actualIndex = Math.floorMod((currentLast - index), items.length);
-            return items[actualIndex];
-        }
+//        if (nextFirst == currentLast) {
+//            actualIndex = Math.floorMod((currentLast - index), items.length);
+//            return items[actualIndex];
+//        }
         //addLast
-        if (nextFirst == nextFirst) {
-            actualIndex = Math.floorMod((currentFirst + index), items.length);
+//        if (nextLast == currentFirst) {
+            int actualIndex = Math.floorMod((currentFirst + index), items.length);
             return items[actualIndex];
-        }
+//        }
 
-        return items[index];
+//        return items[index];
     }
 
     @Override

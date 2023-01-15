@@ -1,6 +1,5 @@
 package deque;
 
-import deque.ArrayDeque;
 
 import java.util.Comparator;
 

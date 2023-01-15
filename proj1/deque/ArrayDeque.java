@@ -143,13 +143,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
-        if(size == 1){
-            return items[index+1];
-        }
-        if(isEmpty()) {
-            return null;
-        }
-        return items[index];
+        int currentFirst = getCurrentFirst();
+        int actualIndex = Math.floorMod((currentFirst + index), items.length);
+        return items[actualIndex];
     }
 
     @Override

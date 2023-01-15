@@ -45,7 +45,7 @@ public class ArrayDequeTest {
     public void getIndexTest(){
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
         for (int i = 0; i < 9; i++){
-            lld1.addFirst(i);
+            lld1.addLast(i);
         }
         int test1 = lld1.get(0);
         assertEquals(0, test1);

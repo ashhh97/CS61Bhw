@@ -22,15 +22,15 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     }
 
-    public boolean isFull() {
+    private boolean isFull() {
         return size == items.length;
     }
-    public float getUseRate() {
+    private float getUseRate() {
         float rate = size / items.length;
         return rate;
     }
 
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] re = (T[]) new Object[capacity];
         System.arraycopy(items, nextLast, re, 0 ,size - nextLast);
         System.arraycopy(items,0, re, size - nextLast, size - (size - nextLast));

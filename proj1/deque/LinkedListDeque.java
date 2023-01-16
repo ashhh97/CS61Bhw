@@ -130,19 +130,17 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     //Same as get, but uses recursion.
-    private T getRecursive(int index) {
-//        Node helper = sentinel;
-        if (index < 0 && index >= this.size()) {
+    public T getRecursive(int index) {
+        if (index >= this.size() || index < 0) {
             return null;
         }
-        return recursive(index, sentinel.next);
+        return getRecursiveHelper(index, sentinel.next);
     }
-
-    private T recursive(int index, Node node) {
+    private T getRecursiveHelper(int index, Node node) {
         if (index == 0) {
             return node.item;
         } else {
-           return recursive(index - 1, node.next);
+            return getRecursiveHelper(index - 1, node.next);
         }
     }
     //test.

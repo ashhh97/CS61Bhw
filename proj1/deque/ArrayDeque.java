@@ -1,10 +1,6 @@
 package deque;
-import deque.Deque;
-
-import java.util.Arrays;
 import java.util.Iterator;
 
-import static java.util.Arrays.*;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
@@ -31,7 +27,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private void resize(int capacity) {
         T[] re = (T[]) new Object[capacity];
 //        if(nextFirst > nextLast){
-        System.arraycopy(items, nextLast, re, 0,size - nextLast);
+        System.arraycopy(items, nextLast, re, 0, size - nextLast);
         System.arraycopy(items, 0, re, size - nextLast, size - (size - nextLast));
 //        } else {
 //            System.arraycopy(items, nextFirst, re, 0 ,size - nextLast);
@@ -154,7 +150,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private class ArrayDequeIterator implements Iterator<T> {
         private int wizPos;
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             wizPos = 0;
         }
         public boolean hasNext() {
@@ -176,7 +172,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return false;
         }
         Deque<T> helper = (Deque<T>) o;
-        if(helper.size() != this.size()) {
+        if (helper.size() != this.size()) {
             return false;
         }
 
@@ -185,7 +181,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
                 return false;
             }
         }
-
         return true;
     }
 }

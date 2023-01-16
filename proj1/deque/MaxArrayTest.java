@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class MaxArrayTest {
     @Test
-    public void removeAddTest(){
+    public void removeAddTest() {
         Comparator<Integer> test1 = new Comparator<>() {
             @Override
             public int compare(Integer o1, Integer o2) {

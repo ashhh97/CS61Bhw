@@ -16,14 +16,25 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
 
 
+
+
     public ArrayDeque() {
         items = (T[]) new Object[startingSize];
         size = 0;
     }
 
+
     private boolean isFull() {
         return size == items.length;
     }
+//    private void getUseRate() {
+//        float mySize = size;
+//        float myLength = items.length;
+//        float rate = mySize / myLength;
+//        if (rate < 0.25 && items.length > 16){
+//            resize(items.length / 2);
+//        }
+//    }
     private void resize(int capacity) {
         T[] re = (T[]) new Object[capacity];
 //        if(nextFirst > nextLast){
@@ -36,6 +47,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items = re;
         nextFirst = items.length - 1;
         nextLast = size;
+
     }
 
     @Override
@@ -52,6 +64,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (nextFirst < 0 && items[theLastOne] == null) {
             nextFirst = theLastOne;
         }
+
     }
 
     @Override
@@ -66,6 +79,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (nextLast >= items.length && items[theFirstOne] == null) {
             nextLast = theFirstOne;
         }
+
     }
 
 //    @Override
@@ -115,6 +129,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[currentFirst] = null;
 
         nextFirst = currentFirst;
+//        getUseRate();
 
         return removed;
     }
@@ -132,6 +147,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[currentLast] = null;
 
         nextLast = currentLast;
+
+//        getUseRate();
 
         return removed;
     }

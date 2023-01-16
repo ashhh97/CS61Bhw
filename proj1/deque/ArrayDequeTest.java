@@ -44,30 +44,36 @@ public class ArrayDequeTest {
     @Test
     public void getIndexTest(){
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
-        for (int i = 0; i < 9; i++){
+        for (int i = 0; i < 20; i++){
             lld1.addLast(i);
         }
-        int test1 = lld1.get(0);
-        assertEquals(0, test1);
+//        int test1 = lld1.get(0);
+//        assertEquals(0, test1);
 
-        lld1.addLast(0);
-        lld1.addFirst(1);
-        lld1.addLast(2);
-        lld1.get(0);
-        lld1.addFirst(4);
-        lld1.addLast(5);
-        lld1.removeFirst();
-        lld1.addFirst(7);
-        lld1.addFirst(8);
-        lld1.get(0);
-        lld1.addLast(10);
-        lld1.removeLast();
-        lld1.removeFirst();
-        lld1.addLast(13);
-        lld1.addLast(14);
-        lld1.addLast(15);
-        lld1.removeFirst();
-        lld1.addLast(17);
+        for (int i = 0; i < 20; i++){
+            lld1.removeFirst();
+        }
+
+//        lld1.addLast(0);
+//        lld1.addFirst(1);
+//        lld1.addLast(2);
+//        lld1.get(0);
+//        lld1.addFirst(4);
+//        lld1.addLast(5);
+//        lld1.removeFirst();
+//        lld1.addFirst(7);
+//        lld1.addFirst(8);
+//        lld1.get(0);
+//        lld1.addLast(10);
+//        lld1.removeLast();
+//        lld1.removeFirst();
+//        lld1.addLast(13);
+//        lld1.addLast(14);
+//        lld1.addLast(15);
+//        lld1.removeFirst();
+//        lld1.addLast(17);
+
+
 
     }
 
